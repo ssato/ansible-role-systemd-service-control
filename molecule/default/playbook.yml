@@ -2,4 +2,14 @@
 - name: Converge
   hosts: all
   roles:
-    - systemd_service_control
+    - role: ssato.systemd_service_control
+      vars:
+        ssc_service: systemd-journald.service
+        ssc_state_should_be: started
+
+    - role: ssato.systemd_service_control
+      vars:
+        ssc_service: systemd-networkd.service
+        ssc_state_should_be: stopped
+
+# vim:sw=2:ts=2:et:
