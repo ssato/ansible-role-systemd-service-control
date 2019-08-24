@@ -1,0 +1,13 @@
+---
+# Examples:
+# ssc_service: sshd.service
+
+ssc_enabled: true
+
+# options: started | stopped | status
+ssc_control: status
+
+# options: started | stopped
+ssc_state_should_be: started
+
+# vim:sw=2:ts=2:et:

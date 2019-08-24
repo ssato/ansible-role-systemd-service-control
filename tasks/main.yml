@@ -1,0 +1,4 @@
+---
+- include: pre.yml
+- include: check_service.yml
+- include: control.yml

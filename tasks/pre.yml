@@ -1,0 +1,21 @@
+---
+- name: Test variables are OK
+  assert:
+    that:
+      - ssc_service | d()
+      - ssc_service is string
+      - ssc_enabled is defined
+      - ssc_enabled in [true, false]
+      - ssc_control | d()
+      - ssc_control is string
+      - ssc_control in ['started', 'stopped', 'status']
+      - ssc_state_should_be | d()
+      - ssc_state_should_be is string
+      - ssc_state_should_be in ['started', 'stopped']
+    fail_msg: |
+      ssc_service: {{ ssc_service | d() | to_nice_json }}
+      ssc_enabled: {{ ssc_enabled | d() | to_nice_json }}
+      ssc_control: {{ ssc_control | d() | to_nice_json }}
+      ssc_state_should_be: {{ ssc_state_should_be | d() | to_nice_json }}
+
+# vim:sw=2:ts=2:et:

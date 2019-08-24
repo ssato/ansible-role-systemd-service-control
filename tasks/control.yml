@@ -1,0 +1,32 @@
+---
+- name: "{{ ssc_control | title }} the service"
+  systemd:
+    name: "{{ ssc_service }}"
+    state: "{{ ssc_control }}"
+    enabled: "{{ ssc_enabled }}"
+  when:
+    - ssc_control in ['started', 'stopped']
+
+- block:
+    - name: Get the status of the service
+      command: |
+        systemctl status {{ ssc_service }}
+      changed_when: false
+      ignore_errors: true
+      register: res
+
+    - name: Test the status of the service is OK
+      assert:
+        that:
+          - |
+            {{ (ssc_state_should_be == 'started' and
+                res.rc == 0) or
+               (ssc_state_should_be == 'stopped' and
+                res.rc == 3) }}
+        fail_msg: |
+          ssc_state_should_be: {{ ssc_state_should_be }}
+          result: {{ res | to_nice_json }}
+  when:
+    - ssc_control == 'status'
+
+# vim:sw=2:ts=2:et:

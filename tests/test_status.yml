@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+  roles:
+    - role: ssato.systemd_service_control
+      vars:
+        ssc_service: chronyd.service
+        ssc_state_should_be: started
+
+    - role: ssato.systemd_service_control
+      vars:
+        ssc_service: sshd.service
+        ssc_state_should_be: stopped
+
+# vim:sw=2:ts=2:et:
